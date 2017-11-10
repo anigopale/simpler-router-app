@@ -13,7 +13,6 @@ class Viewuser extends Component {
   }
   componentDidMount() {
     this.props.showUser(this.props.match.params.uid);
-
   }
   componentDidUpdate() {
     if(this.props.match.params.uid == this.props.user.id)

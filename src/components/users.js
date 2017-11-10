@@ -23,7 +23,7 @@ class Users extends Component {
       const link = `/users/${user.id}` ;
       return (
 
-          <Card>
+          <Card color="teal">
             <Card.Content>
               <Link to={link}>
                 <h3>{user.name}</h3>

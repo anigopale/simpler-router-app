@@ -26,9 +26,9 @@ class Posts extends Component {
     return this.props.posts.map(post => {
       return (
         <Link to={`/users/${this.props.match.params.uid}/posts/${post.id}`} onClick={this.handlepostClick.bind(this)}>
-        <Segment onMouseOver={this.handleMouseover.bind(this)} onMouseOut={this.handleMouseout.bind(this)}>
-          {post.title}
-        </Segment>
+          <Segment onMouseOver={this.handleMouseover.bind(this)} onMouseOut={this.handleMouseout.bind(this)}>
+            {post.title}
+          </Segment>
         </Link>
       )
     })
@@ -47,7 +47,7 @@ class Posts extends Component {
 
   renderPreview() {
     if(!this.props.match.params.pid) {
-      return <h2>click to preview</h2>
+      return <h2>click to view post</h2>
     }
     for (var post in this.props.posts) {
       var postid = this.props.posts[post].id;
@@ -69,7 +69,7 @@ class Posts extends Component {
 
       return this.props.comments.map(comment => {
         return (
-          <Segment>
+          <Segment color="teal">
             {comment.email}
             <Divider />
             <p>{comment.body}</p>
@@ -122,22 +122,26 @@ class Posts extends Component {
         </Link>
         <Button onClick={this.handleClick.bind(this)}>Bookmark</Button>
         {this.renderBookmark()}
-        <h2>Posts of {this.props.user.name}</h2>
+        <h2>User:{this.props.user.name}</h2>
         <Grid>
           <Grid.Row columns="2">
             <Grid.Column>
+              <h2>Posts</h2>
               {this.renderPosts()}
             </Grid.Column>
+
             <Grid.Column>
-              <h1>Selected Post</h1>
-              <Segment color="teal" inverted>
-                {this.renderPreview()}
-              </Segment>
-              <Button onClick={this.handlefetchClick.bind(this)}>Update Comments</Button>
-              <Button onClick={this.handleclearClick.bind(this)}>Clear</Button>
-              <h3>Comments</h3>
-              <Divider />
-              {this.renderComments()}
+
+                <h1>Selected Post</h1>
+                <Segment color="teal" inverted>
+                  {this.renderPreview()}
+                </Segment>
+                <Button onClick={this.handlefetchClick.bind(this)}>Update Comments</Button>
+                <Button onClick={this.handleclearClick.bind(this)}>Clear</Button>
+                <h3>Comments</h3>
+                <Divider />
+                {this.renderComments()}
+
             </Grid.Column>
           </Grid.Row>
         </Grid>
