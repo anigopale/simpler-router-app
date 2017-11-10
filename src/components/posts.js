@@ -3,17 +3,17 @@ import Nav from './nav';
 import { Link, Route } from 'react-router-dom';
 import { fetchPosts, showUser, fetchComments, clearComments } from '../actions';
 import { connect } from 'react-redux';
-import { Grid, Segment, Container, Divider, Button } from 'semantic-ui-react';
+import { Grid, Segment, Container, Divider, Button, Loader } from 'semantic-ui-react';
 
 class Posts extends Component {
   constructor(props) {
     super(props);
-    this.state = { fetched: false, link: "", comments: false };
+    this.state = { fetched: false, link: "", comments: false, updateclicked: false };
   }
 
   componentDidMount() {
-    this.props.fetchPosts(this.props.match.params.uid);
     this.props.showUser(this.props.match.params.uid);
+    this.props.fetchPosts(this.props.match.params.uid);
   }
   componentDidUpdate() {
     this.setState({ fetched: true });
@@ -21,9 +21,9 @@ class Posts extends Component {
   }
 
   renderPosts() {
-    // if(this.props.posts[0].userId != this.props.match.params.uid) {
-    //   return <h1>Loading Posts...</h1>
-    // }
+    if(this.props.posts[0].userId != this.props.match.params.uid) {
+      return <Loader active inline='centered'>Loading Posts</Loader>
+    }
     return this.props.posts.map(post => {
       return (
         <Link to={`/users/${this.props.match.params.uid}/posts/${post.id}`}>
@@ -60,18 +60,22 @@ class Posts extends Component {
   }
 
   renderComments() {
-    if(this.state.comments)
+    if(this.props.comments.length == 0 && this.state.updateclicked) {
+      return <Loader active inline='centered'>loading comments</Loader>
+    }
+
+      return this.props.comments.map(comment => {
+        return (
+          <Segment>
+            {comment.email}
+            <Divider />
+            <p>{comment.body}</p>
+          </Segment>
+        )
+      })
 
 
-    return this.props.comments.map(comment => {
-      return (
-        <Segment>
-          {comment.email}
-          <Divider />
-          <p>{comment.body}</p>
-        </Segment>
-      )
-    })
+
 
   }
 
@@ -89,8 +93,13 @@ class Posts extends Component {
   }
 
   handlefetchClick() {
+    this.setState({ updateclicked: true });
     this.props.fetchComments(this.props.match.params.pid);
-    this.setState({ comments:true })
+    this.setState({ comments: true });
+  }
+  handleclearClick() {
+    this.props.clearComments();
+    this.setState({ updateclicked: false })
   }
 
   render() {
@@ -99,7 +108,8 @@ class Posts extends Component {
       return (
         <div>
           <Nav />
-          <h1>Loading...</h1>
+          <Divider />
+          <Loader active inline='centered'>fetching posts of user "{this.props.match.params.uid}"</Loader>
         </div>
       )
     }
@@ -113,7 +123,7 @@ class Posts extends Component {
         </Link>
         <Button onClick={this.handleClick.bind(this)}>Bookmark</Button>
         {this.renderBookmark()}
-        <h2>Posts of User:{this.props.user.name}</h2>
+        <h2>Posts of {this.props.user.name}</h2>
         <Grid>
           <Grid.Row columns="2">
             <Grid.Column>
@@ -125,7 +135,7 @@ class Posts extends Component {
                 {this.renderPreview()}
               </Segment>
               <Button onClick={this.handlefetchClick.bind(this)}>Update Comments</Button>
-              <Button onClick={() => {this.props.clearComments()}}>Clear</Button>
+              <Button onClick={this.handleclearClick.bind(this)}>Clear</Button>
               <h3>Comments</h3>
               <Divider />
               {this.renderComments()}

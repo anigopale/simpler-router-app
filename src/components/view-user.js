@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Nav from './nav';
 import { showUser } from '../actions';
 import { Link } from 'react-router-dom';
-import { Button, Container, Segment, Image, Divider } from 'semantic-ui-react';
+import { Button, Container, Segment, Image, Divider, Loader } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 
 class Viewuser extends Component {
@@ -23,7 +23,7 @@ class Viewuser extends Component {
 
   renderUserDetails() {
     if(!this.state.fetched){
-      return <h1>Loading...</h1>
+      return <Loader active inline='centered'>fetching user data</Loader>
     }
 
     return (
