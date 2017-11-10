@@ -7,7 +7,7 @@ export default class Nav extends Component {
     console.log(this.props.currentpath);
     return (
       <div>
-        My App
+        Simple Routing App
         <Menu>
 
           <Link to="/">
