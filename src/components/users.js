@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Nav from './nav';
 
-class Page1 extends Component {
+class Users extends Component {
   constructor(props) {
     super(props);
 
@@ -49,7 +49,6 @@ class Page1 extends Component {
     return (
       <div>
       <Nav currentpath={this.props.location.pathname} />
-        this is page1
         <Divider hidden />
           <Card.Group>
             {this.renderUsers()}
@@ -63,4 +62,4 @@ function mapStateToProps({ users }) {
   return { users };
 }
 
-export default connect(mapStateToProps, { fetchUsers })(Page1);
+export default connect(mapStateToProps, { fetchUsers })(Users);
