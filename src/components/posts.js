@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import Nav from './nav';
 import { Link, Route } from 'react-router-dom';
-import { fetchPosts, showUser } from '../actions';
+import { fetchPosts, showUser, fetchComments } from '../actions';
 import { connect } from 'react-redux';
 import { Grid, Segment, Container, Divider, Button } from 'semantic-ui-react';
 
 class Posts extends Component {
   constructor(props) {
     super(props);
-    this.state = { fetched: false };
+    this.state = { fetched: false, link: "", comments: false };
   }
 
   componentDidMount() {
@@ -16,7 +16,8 @@ class Posts extends Component {
     this.props.showUser(this.props.match.params.uid);
   }
   componentDidUpdate() {
-    this.setState({fetched: true})
+    this.setState({ fetched: true });
+    console.log(this.props.comments);
   }
 
   renderPosts() {
@@ -58,8 +59,42 @@ class Posts extends Component {
     }
   }
 
+  renderComments() {
+    if(this.state.comments)
+
+
+    return this.props.comments.map(comment => {
+      return (
+        <Segment>
+          {comment.email}
+          <Divider />
+          <p>{comment.body}</p>
+        </Segment>
+      )
+    })
+
+  }
+
+  renderBookmark() {
+    return (
+      <div>
+        <h3>
+          Click Bookmark button to get current url:- {this.state.link}
+        </h3>
+      </div>
+    )
+  }
+  handleClick() {
+    this.setState({ link: this.props.location.pathname });
+  }
+
+  handlefetchClick() {
+    this.props.fetchComments(this.props.match.params.pid);
+    this.setState({ comments:true })
+  }
 
   render() {
+    console.log(this.props.comments);
     if(!this.state.fetched) {
       return (
         <div>
@@ -76,14 +111,23 @@ class Posts extends Component {
         <Link to={"/users/"+this.props.match.params.uid}>
           <Button>Back</Button>
         </Link>
-        <h2>Posts of {this.props.user.name}</h2>
+        <Button onClick={this.handleClick.bind(this)}>Bookmark</Button>
+        {this.renderBookmark()}
+        <h2>Posts of User:{this.props.user.name}</h2>
         <Grid>
           <Grid.Row columns="2">
             <Grid.Column>
               {this.renderPosts()}
             </Grid.Column>
             <Grid.Column>
-              {this.renderPreview()}
+              <h1>Selected Post</h1>
+              <Segment color="teal" inverted>
+                {this.renderPreview()}
+              </Segment>
+              <Button onClick={this.handlefetchClick.bind(this)}>Update Comments</Button>
+              <Button onClick={() => {this.setState({comments: false})}}>Clear</Button>
+              <Divider />
+              {this.renderComments()}
             </Grid.Column>
           </Grid.Row>
         </Grid>
@@ -93,7 +137,7 @@ class Posts extends Component {
 }
 
 function mapStateToProps(state) {
-  return { posts: state.posts, user: state.user }
+  return { posts: state.posts, user: state.user, comments: state.comments }
 }
 
-export default connect(mapStateToProps, { fetchPosts, showUser })(Posts);
+export default connect(mapStateToProps, { fetchPosts, showUser, fetchComments })(Posts);

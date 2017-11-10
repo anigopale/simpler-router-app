@@ -7,12 +7,22 @@ export function fetchPosts(uid) {
   return function(dispatch) {
     axios.get(`${ROOT_URL}/posts?userId=${uid}`)
     .then(response => {
-      console.log("promise resolved:",response.data);
-      console.log("body:",response.data);
       dispatch({
         type: 'FETCH_POSTS',
         payload: response.data
       });
+    })
+  }
+}
+
+export function fetchComments(pid) {
+  return function(dispatch) {
+    axios.get(`${ROOT_URL}/comments?postId=${pid}`).
+    then(response => {
+      dispatch({
+        type: 'FETCH_COMMENTS',
+        payload: response.data
+      })
     })
   }
 
