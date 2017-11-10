@@ -25,7 +25,12 @@ export function fetchComments(pid) {
       })
     })
   }
+}
 
+export function clearComments() {
+  return {
+    type: 'CLEAR_COMMENTS'
+  }
 }
 
 

@@ -41,7 +41,7 @@ class Viewuser extends Component {
           </div>
           <div>
             Address:
-            <div>{this.props.user.address.street}, {this.props.user.address.suite}, {this.props.user.address.city}, {this.props.user.address.zipcode}</div>
+            {this.props.user.address.street}, {this.props.user.address.suite}, {this.props.user.address.city}, {this.props.user.address.zipcode}
           </div>
         </Segment>
       </Container>

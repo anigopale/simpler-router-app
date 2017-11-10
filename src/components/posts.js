@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Nav from './nav';
 import { Link, Route } from 'react-router-dom';
-import { fetchPosts, showUser, fetchComments } from '../actions';
+import { fetchPosts, showUser, fetchComments, clearComments } from '../actions';
 import { connect } from 'react-redux';
 import { Grid, Segment, Container, Divider, Button } from 'semantic-ui-react';
 
@@ -125,7 +125,7 @@ class Posts extends Component {
                 {this.renderPreview()}
               </Segment>
               <Button onClick={this.handlefetchClick.bind(this)}>Update Comments</Button>
-              <Button onClick={() => {this.setState({comments: false})}}>Clear</Button>
+              <Button onClick={() => {this.props.clearComments()}}>Clear</Button>
               <Divider />
               {this.renderComments()}
             </Grid.Column>
@@ -140,4 +140,4 @@ function mapStateToProps(state) {
   return { posts: state.posts, user: state.user, comments: state.comments }
 }
 
-export default connect(mapStateToProps, { fetchPosts, showUser, fetchComments })(Posts);
+export default connect(mapStateToProps, { fetchPosts, showUser, fetchComments, clearComments })(Posts);

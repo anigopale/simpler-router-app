@@ -3,6 +3,9 @@ export default function(state = [], action) {
     case 'FETCH_COMMENTS':
       return action.payload;
     break;
+    case 'CLEAR_COMMENTS':
+      return [];
+    break;
   }
   return state;
 }
