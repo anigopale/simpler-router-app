@@ -126,6 +126,7 @@ class Posts extends Component {
               </Segment>
               <Button onClick={this.handlefetchClick.bind(this)}>Update Comments</Button>
               <Button onClick={() => {this.props.clearComments()}}>Clear</Button>
+              <h3>Comments</h3>
               <Divider />
               {this.renderComments()}
             </Grid.Column>
