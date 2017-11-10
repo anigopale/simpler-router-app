@@ -25,9 +25,11 @@ class Posts extends Component {
     // }
     return this.props.posts.map(post => {
       return (
+        <Link to={`/users/${this.props.match.params.uid}/posts/${post.id}`}>
         <Segment onMouseOver={this.handleMouseover.bind(this)} onMouseOut={this.handleMouseout.bind(this)}>
           {post.title}
         </Segment>
+        </Link>
       )
     })
   }
@@ -36,6 +38,24 @@ class Posts extends Component {
   }
   handleMouseout(event){
     event.target.className='ui segment';
+  }
+
+
+  renderPreview() {
+    if(!this.props.match.params.pid) {
+      return <h2>click to preview</h2>
+    }
+    for (var post in this.props.posts) {
+      var postid = this.props.posts[post].id;
+      if(postid == this.props.match.params.pid) {
+        return (
+          <div>
+            <h2>{this.props.posts[post].title}</h2>
+            <p>{this.props.posts[post].body}</p>
+          </div>
+        )
+      }
+    }
   }
 
 

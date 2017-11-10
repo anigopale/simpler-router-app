@@ -14,7 +14,7 @@ export default class App extends Component {
         <BrowserRouter>
           <Container>
             <Switch>
-              
+              <Route path="/users/:uid/posts/:pid" component={Posts} />
               <Route path="/users/:uid/posts" component={Posts} />
               <Route path="/users/:uid" component={Viewuser} />
               <Route path="/users" component={Page1} />
