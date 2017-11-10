@@ -8,7 +8,6 @@ import { Grid, Segment, Container, Divider, Button, Loader } from 'semantic-ui-r
 class Posts extends Component {
   constructor(props) {
     super(props);
-    this.props.clearComments();
     this.state = { fetched: false, link: "", comments: false, updateclicked: false };
   }
 
@@ -18,7 +17,6 @@ class Posts extends Component {
   }
   componentDidUpdate() {
     this.setState({ fetched: true });
-    console.log(this.props.comments);
   }
 
   renderPosts() {
@@ -78,10 +76,6 @@ class Posts extends Component {
           </Segment>
         )
       })
-
-
-
-
   }
 
   renderBookmark() {
@@ -114,7 +108,7 @@ class Posts extends Component {
         <div>
           <Nav />
           <Divider />
-          <Loader active inline='centered'>fetching posts of user "{this.props.match.params.uid}"</Loader>
+          <Loader active inline='centered'>fetching user posts</Loader>
         </div>
       )
     }
