@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Segment, Container, Divider, Card } from 'semantic-ui-react';
+import { Segment, Container, Divider, Card, Image } from 'semantic-ui-react';
 import { fetchUsers } from '../actions';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -22,13 +22,15 @@ class Page1 extends Component {
     return this.props.users.map(user => {
       const link = `/users/${user.id}` ;
       return (
-        <Link to={link}>
-          <Card
-            header={user.name}
-            description={user.website}
-            meta={user.email}
-          />
-        </Link>
+
+          <Card>
+            <Card.Content>
+              <Link to={link}>
+                <h3>{user.name}</h3>
+              </Link>
+            </Card.Content>
+          </Card>
+
       )
     })
   }
@@ -49,11 +51,9 @@ class Page1 extends Component {
       <Nav currentpath={this.props.location.pathname} />
         this is page1
         <Divider hidden />
-        <Container text>
           <Card.Group>
-                {this.renderUsers()}
+            {this.renderUsers()}
           </Card.Group>
-        </Container>
       </div>
     )
   }

@@ -2,20 +2,18 @@ import React, { Component } from 'react';
 import Nav from './nav';
 import { showUser } from '../actions';
 import { Link } from 'react-router-dom';
-import { Button, Container, Segment } from 'semantic-ui-react';
+import { Button, Container, Segment, Image, Divider } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 
 class Viewuser extends Component {
 
   constructor(props) {
     super(props);
-
     this.state={ fetched: false }
   }
   componentDidMount() {
     this.props.showUser(this.props.match.params.uid);
-    if(this.props.match.params.uid == this.props.user.id)
-      this.setState({ fetched: true })
+
   }
   componentDidUpdate() {
     if(this.props.match.params.uid == this.props.user.id)
@@ -31,11 +29,19 @@ class Viewuser extends Component {
     return (
       <Container text>
         <Segment>
+          <Link to={"/users/"+this.props.match.params.uid+"/posts"}>
+            <Button floated="right">Show User's Posts</Button>
+          </Link>
+          <Image src="http://www.cahcet.in/en/wp-content/uploads/2015/12/default-avatar.v9899025.gif" />
           <h2>{this.props.user.name}</h2>
-          <div>email: {this.props.user.email}</div>
-          <div>website: {this.props.user.website}</div>
+          <div>Email: {this.props.user.email}</div>
+          <div>Website: {this.props.user.website}</div>
           <div>
-            phone: {this.props.user.phone}
+            Phone: {this.props.user.phone}
+          </div>
+          <div>
+            Address:
+            <div>{this.props.user.address.street}, {this.props.user.address.suite}, {this.props.user.address.city}, {this.props.user.address.zipcode}</div>
           </div>
         </Segment>
       </Container>
@@ -50,6 +56,7 @@ class Viewuser extends Component {
     return(
       <div>
         <Nav />
+        <Divider />
         <Link to="/users">
           <Button>Back</Button>
         </Link>

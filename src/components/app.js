@@ -5,6 +5,7 @@ import Home from './home';
 import Page1 from './page1';
 import Page2 from './page2';
 import Viewuser from './view-user';
+import Posts from './posts';
 
 export default class App extends Component {
   render() {
@@ -13,6 +14,8 @@ export default class App extends Component {
         <BrowserRouter>
           <Container>
             <Switch>
+              
+              <Route path="/users/:uid/posts" component={Posts} />
               <Route path="/users/:uid" component={Viewuser} />
               <Route path="/users" component={Page1} />
               <Route path="/page2" component={Page2} />

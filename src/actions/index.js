@@ -2,10 +2,10 @@ import axios from 'axios';
 
 const ROOT_URL=`https://jsonplaceholder.typicode.com`;
 
-export function fetchPosts() {
+export function fetchPosts(uid) {
 
   return function(dispatch) {
-    axios.get(`${ROOT_URL}/posts`)
+    axios.get(`${ROOT_URL}/posts?userId=${uid}`)
     .then(response => {
       console.log("promise resolved:",response.data);
       console.log("body:",response.data);
