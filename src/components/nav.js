@@ -7,7 +7,7 @@ export default class Nav extends Component {
     console.log(this.props.currentpath);
     return (
       <div>
-        Simple Routing App
+        <h1>Simple Routing App</h1>
         <Menu>
 
           <Link to="/">
@@ -20,7 +20,7 @@ export default class Nav extends Component {
           <Link to="/page1">
             <Menu.Item
               active={ this.props.currentpath == "/page1" }
-              name="Page1"
+              name="Show Posts"
               />
           </Link>
 
