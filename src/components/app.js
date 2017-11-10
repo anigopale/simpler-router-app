@@ -4,6 +4,7 @@ import { Container } from 'semantic-ui-react';
 import Home from './home';
 import Page1 from './page1';
 import Page2 from './page2';
+import Viewuser from './view-user';
 
 export default class App extends Component {
   render() {
@@ -12,7 +13,8 @@ export default class App extends Component {
         <BrowserRouter>
           <Container>
             <Switch>
-              <Route path="/page1" component={Page1} />
+              <Route path="/users/:uid" component={Viewuser} />
+              <Route path="/users" component={Page1} />
               <Route path="/page2" component={Page2} />
               <Route exact path="/" component={Home} />
             </Switch>

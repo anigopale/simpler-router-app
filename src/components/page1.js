@@ -1,29 +1,45 @@
 import React, { Component } from 'react';
-import { Segment, Container, Divider } from 'semantic-ui-react';
-import { fetchPosts } from '../actions';
+import { Segment, Container, Divider, Card } from 'semantic-ui-react';
+import { fetchUsers } from '../actions';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Nav from './nav';
 
 class Page1 extends Component {
+  constructor(props) {
+    super(props);
+
+  }
+
   componentDidMount() {
-    this.props.fetchPosts();
+    this.props.fetchUsers();
   }
   componentDidUpdate() {
     console.log("component updated",this.props.posts);
   }
 
-  renderTitles() {
-    return this.props.posts.map(post => {
+  renderUsers() {
+    return this.props.users.map(user => {
+      const link = `/users/${user.id}` ;
       return (
-        <Segment onMouseOver={this.handleMouseover.bind(this)} onMouseOut={this.handleMouseout.bind(this)} >{post.title}</Segment>
+        <Link to={link}>
+          <Card
+            header={user.name}
+            description={user.website}
+            meta={user.email}
+          />
+        </Link>
       )
     })
   }
   handleMouseover(event) {
-    event.target.className='ui segment inverted teal';
+    console.log(event.target.className);
+  if(event.target.className === 'ui segment')
+    {event.target.className='ui segment inverted teal';}
   }
   handleMouseout(event) {
-    event.target.className='ui segment';
+    if(event.target.className === 'ui segment inverted teal' || event.target.className === 'ui segment')
+      {event.target.className='ui segment';}
   }
 
   render() {
@@ -34,15 +50,17 @@ class Page1 extends Component {
         this is page1
         <Divider hidden />
         <Container text>
-          {this.renderTitles()}
+          <Card.Group>
+                {this.renderUsers()}
+          </Card.Group>
         </Container>
       </div>
     )
   }
 }
 
-function mapStateToProps({ posts }) {
-  return {posts};
+function mapStateToProps({ users }) {
+  return { users };
 }
 
-export default connect(mapStateToProps, { fetchPosts })(Page1);
+export default connect(mapStateToProps, { fetchUsers })(Page1);
