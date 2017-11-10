@@ -8,6 +8,7 @@ import { Grid, Segment, Container, Divider, Button, Loader } from 'semantic-ui-r
 class Posts extends Component {
   constructor(props) {
     super(props);
+    this.props.clearComments();
     this.state = { fetched: false, link: "", comments: false, updateclicked: false };
   }
 
@@ -26,13 +27,17 @@ class Posts extends Component {
     }
     return this.props.posts.map(post => {
       return (
-        <Link to={`/users/${this.props.match.params.uid}/posts/${post.id}`}>
+        <Link to={`/users/${this.props.match.params.uid}/posts/${post.id}`} onClick={this.handlepostClick.bind(this)}>
         <Segment onMouseOver={this.handleMouseover.bind(this)} onMouseOut={this.handleMouseout.bind(this)}>
           {post.title}
         </Segment>
         </Link>
       )
     })
+  }
+  handlepostClick() {
+    this.setState({updateclicked: false});
+    this.props.clearComments();
   }
   handleMouseover(event){
     event.target.className='ui segment inverted teal';
